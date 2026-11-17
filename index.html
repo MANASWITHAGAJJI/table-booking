@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="theme-color" content="#8B5CF6">
+  <title>TableBook | Restaurant Reservations</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Plus+Jakarta+Sans:wght@600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="style.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+</head>
+<body>
+  <div class="app-shell">
+    <aside class="sidebar" id="sidebar">
+      <a class="brand" href="#dashboard"><span class="brand-icon"><i class="fa-solid fa-chair"></i></span><span>Table<span class="brand-light">Book</span></span></a>
+      <div class="side-label">WORKSPACE</div>
+      <nav class="nav-links" aria-label="Main navigation">
+        <a class="nav-link active" href="#dashboard" data-page="dashboard"><i class="fa-solid fa-chart-pie"></i> Dashboard</a>
+        <a class="nav-link" href="#tables" data-page="tables"><i class="fa-solid fa-chair"></i> Tables</a>
+        <a class="nav-link" href="#bookings" data-page="bookings"><i class="fa-regular fa-calendar-check"></i> Bookings</a>
+        <a class="nav-link" href="#layout" data-page="layout"><i class="fa-solid fa-border-all"></i> Table layout</a>
+        <a class="nav-link" href="#customers" data-page="customers"><i class="fa-solid fa-users"></i> Customers</a>
+        <a class="nav-link" href="#availability" data-page="availability"><i class="fa-solid fa-magnifying-glass"></i> Availability</a>
+        <a class="nav-link" href="#calendar" data-page="calendar"><i class="fa-regular fa-calendar-days"></i> Calendar</a>
+        <a class="nav-link" href="#reports" data-page="reports"><i class="fa-solid fa-chart-column"></i> Reports</a>
+      </nav>
+      <div class="sidebar-bottom">
+        <div class="help-card"><div class="help-icon"><i class="fa-regular fa-lightbulb"></i></div><strong>Need a hand?</strong><p>Manage your restaurant reservations in one place.</p></div>
+        <button class="nav-link logout-btn" id="logoutBtn"><i class="fa-solid fa-arrow-right-from-bracket"></i> Sign out</button>
+        <div class="sidebar-foot">TABLEBOOK · DEMO VERSION</div>
+      </div>
+    </aside>
+
+    <main class="main-content">
+      <header class="topbar">
+        <button class="icon-btn menu-toggle" id="menuToggle" aria-label="Toggle menu"><i class="fa-solid fa-bars"></i></button>
+        <div class="breadcrumb"><span>Workspace</span><i class="fa-solid fa-chevron-right"></i><strong id="currentPageName">Dashboard</strong></div>
+        <div class="top-actions">
+          <button class="icon-btn" id="themeToggle" title="Toggle dark mode" aria-label="Toggle dark mode"><i class="fa-regular fa-moon"></i></button>
+          <div class="profile"><div class="avatar">AD</div><div class="profile-copy"><strong id="profileName">Admin Demo</strong><small>Administrator</small></div></div>
+        </div>
+      </header>
+
+      <div class="page-wrap">
+        <section class="page active" id="page-dashboard">
+          <div class="page-heading"><div><p class="eyebrow">OVERVIEW</p><h1>Good morning, Admin <span class="wave">✦</span></h1><p class="muted">Here's what's happening at your restaurant today.</p></div><button class="btn btn-primary" data-open-booking><i class="fa-solid fa-plus"></i> New booking</button></div>
+          <div class="stats-grid">
+            <article class="stat-card"><div class="stat-top"><span>Total bookings</span><span class="stat-icon purple"><i class="fa-regular fa-calendar-check"></i></span></div><strong id="statBookings">0</strong><small class="positive">All reservation records</small></article>
+            <article class="stat-card"><div class="stat-top"><span>Today's reservations</span><span class="stat-icon blue"><i class="fa-solid fa-calendar-day"></i></span></div><strong id="statToday">0</strong><small class="muted">For today's service</small></article>
+            <article class="stat-card"><div class="stat-top"><span>Available tables</span><span class="stat-icon green"><i class="fa-solid fa-chair"></i></span></div><strong id="statAvailable">0</strong><small class="muted">Ready to be booked</small></article>
+            <article class="stat-card"><div class="stat-top"><span>Estimated revenue</span><span class="stat-icon orange"><i class="fa-solid fa-indian-rupee-sign"></i></span></div><strong id="statRevenue">₹0</strong><small class="muted">From confirmed & seated bookings</small></article>
+          </div>
+          <div class="dashboard-grid">
+            <article class="panel"><div class="panel-heading"><div><h2>Recent bookings</h2><p class="muted">Latest reservation activity</p></div><a class="text-link" href="#bookings">View all <i class="fa-solid fa-arrow-right"></i></a></div><div class="table-scroll"><table><thead><tr><th>Customer</th><th>Date & time</th><th>Guests</th><th>Table</th><th>Status</th></tr></thead><tbody id="recentBookings"></tbody></table></div></article>
+            <article class="panel occupancy-panel"><div class="panel-heading"><div><h2>Table occupancy</h2><p class="muted">Current table status</p></div><span class="live-dot">Live demo</span></div><div class="occupancy-number"><strong id="occupancyPercent">0%</strong><span>occupied</span></div><div class="progress-track"><div class="progress-fill" id="occupancyBar"></div></div><div class="legend"><span><i class="dot available"></i> Available</span><span><i class="dot reserved"></i> Reserved</span><span><i class="dot occupied"></i> Occupied</span></div><div class="mini-summary"><span>Total tables</span><strong id="totalTables">0</strong></div></article>
+          </div>
+          <article class="panel quick-panel"><div class="panel-heading"><div><h2>Quick actions</h2><p class="muted">Common tasks at your fingertips</p></div></div><div class="quick-actions"><button data-open-booking><i class="fa-solid fa-calendar-plus"></i><span><strong>Create booking</strong><small>Add a reservation</small></span><i class="fa-solid fa-arrow-up-right-from-square arrow"></i></button><a href="#tables"><i class="fa-solid fa-chair"></i><span><strong>Manage tables</strong><small>Update table status</small></span><i class="fa-solid fa-arrow-up-right-from-square arrow"></i></a><a href="#availability"><i class="fa-solid fa-magnifying-glass"></i><span><strong>Check availability</strong><small>Find a free table</small></span><i class="fa-solid fa-arrow-up-right-from-square arrow"></i></a><a href="#reports"><i class="fa-solid fa-file-export"></i><span><strong>Export report</strong><small>Download booking data</small></span><i class="fa-solid fa-arrow-up-right-from-square arrow"></i></a></div></article>
+        </section>
+
+        <section class="page" id="page-tables">
+          <div class="page-heading"><div><p class="eyebrow">RESTAURANT SETUP</p><h1>Table management</h1><p class="muted">Add, edit and organize your restaurant tables.</p></div><button class="btn btn-primary" id="addTableBtn"><i class="fa-solid fa-plus"></i> Add table</button></div>
+          <div class="toolbar"><div class="search-box"><i class="fa-solid fa-magnifying-glass"></i><input id="tableSearch" placeholder="Search tables..."></div><select id="tableStatusFilter"><option value="">All statuses</option><option>Available</option><option>Reserved</option><option>Occupied</option><option>Out of Service</option></select></div>
+          <div class="panel"><div class="table-scroll"><table><thead><tr><th>Table</th><th>Capacity</th><th>Location</th><th>Floor</th><th>Status</th><th>Actions</th></tr></thead><tbody id="tablesBody"></tbody></table></div></div>
+        </section>
+
+        <section class="page" id="page-bookings">
+          <div class="page-heading"><div><p class="eyebrow">RESERVATIONS</p><h1>Booking management</h1><p class="muted">Keep track of every guest reservation.</p></div><button class="btn btn-primary" data-open-booking><i class="fa-solid fa-plus"></i> New booking</button></div>
+          <div class="toolbar"><div class="search-box"><i class="fa-solid fa-magnifying-glass"></i><input id="bookingSearch" placeholder="Search customer or booking ID..."></div><select id="bookingStatusFilter"><option value="">All statuses</option><option>Pending</option><option>Confirmed</option><option>Seated</option><option>Cancelled</option><option>No-Show</option></select></div>
+          <div class="panel"><div class="table-scroll"><table><thead><tr><th>Booking ID</th><th>Customer</th><th>Date & time</th><th>Guests</th><th>Table</th><th>Status</th><th>Actions</th></tr></thead><tbody id="bookingsBody"></tbody></table></div></div>
+        </section>
+
+        <section class="page" id="page-layout">
+          <div class="page-heading"><div><p class="eyebrow">FLOOR PLAN</p><h1>Table layout</h1><p class="muted">A visual overview of your restaurant floor.</p></div><div class="floor-label"><i class="fa-solid fa-location-dot"></i> Ground floor · Demo layout</div></div>
+          <div class="layout-legend"><span><i class="dot available"></i> Available</span><span><i class="dot reserved"></i> Reserved</span><span><i class="dot occupied"></i> Occupied</span><span><i class="dot out"></i> Out of service</span></div>
+          <div class="floor-plan" id="floorPlan"><div class="floor-zone"><span>WINDOW SIDE</span><div class="floor-tables" id="floorTables"></div></div><div class="floor-center"><span><i class="fa-solid fa-utensils"></i> RESTAURANT FLOOR</span></div><div class="floor-zone"><span>MAIN DINING</span><div class="floor-tables" id="floorTablesSecond"></div></div></div>
+        </section>
+
+        <section class="page" id="page-customers">
+          <div class="page-heading"><div><p class="eyebrow">GUEST DIRECTORY</p><h1>Customers</h1><p class="muted">Customer profiles and reservation history.</p></div><button class="btn btn-primary" id="addCustomerBtn"><i class="fa-solid fa-plus"></i> Add customer</button></div>
+          <div class="toolbar"><div class="search-box"><i class="fa-solid fa-magnifying-glass"></i><input id="customerSearch" placeholder="Search name, email or phone..."></div></div>
+          <div class="panel"><div class="table-scroll"><table><thead><tr><th>Customer</th><th>Email</th><th>Phone</th><th>Preferences</th><th>Total visits</th><th>Actions</th></tr></thead><tbody id="customersBody"></tbody></table></div></div>
+        </section>
+
+        <section class="page" id="page-availability">
+          <div class="page-heading"><div><p class="eyebrow">SMART SEARCH</p><h1>Check availability</h1><p class="muted">Find a suitable table for a date, time and party size.</p></div></div>
+          <div class="panel availability-panel"><form id="availabilityForm" class="availability-form"><label>Date<input type="date" id="availabilityDate" required></label><label>Time<input type="time" id="availabilityTime" value="19:00" required></label><label>Guests<select id="availabilityGuests"><option>1</option><option selected>2</option><option>3</option><option>4</option><option>5</option><option>6</option><option>7</option><option>8</option></select></label><button class="btn btn-primary" type="submit"><i class="fa-solid fa-magnifying-glass"></i> Find tables</button></form></div>
+          <div id="availabilityResults" class="results-grid"><div class="empty-state"><i class="fa-solid fa-calendar-check"></i><h3>Ready when you are</h3><p>Choose your date, time and number of guests to see available tables.</p></div></div>
+        </section>
+
+        <section class="page" id="page-calendar">
+          <div class="page-heading"><div><p class="eyebrow">SCHEDULE</p><h1>Booking calendar</h1><p class="muted">See reservations by day.</p></div><button class="btn btn-primary" data-open-booking><i class="fa-solid fa-plus"></i> New booking</button></div>
+          <div class="panel calendar-panel"><div class="calendar-head"><button class="icon-btn" id="prevMonth"><i class="fa-solid fa-chevron-left"></i></button><h2 id="calendarMonth"></h2><button class="icon-btn" id="nextMonth"><i class="fa-solid fa-chevron-right"></i></button></div><div class="calendar-grid" id="calendarGrid"></div></div>
+          <div class="panel selected-day-panel"><h2 id="selectedDayTitle">Select a date</h2><div id="selectedDayBookings" class="selected-bookings muted">Choose a calendar date to view reservations.</div></div>
+        </section>
+
+        <section class="page" id="page-reports">
+          <div class="page-heading"><div><p class="eyebrow">INSIGHTS</p><h1>Reports</h1><p class="muted">A snapshot of your restaurant's reservation performance.</p></div><button class="btn btn-primary" id="exportCsv"><i class="fa-solid fa-download"></i> Export CSV</button></div>
+          <div class="stats-grid report-stats"><article class="stat-card"><div class="stat-top"><span>Total customers</span><span class="stat-icon purple"><i class="fa-solid fa-users"></i></span></div><strong id="reportCustomers">0</strong><small class="muted">Guest profiles</small></article><article class="stat-card"><div class="stat-top"><span>Confirmed bookings</span><span class="stat-icon green"><i class="fa-solid fa-circle-check"></i></span></div><strong id="reportConfirmed">0</strong><small class="muted">Confirmed reservations</small></article><article class="stat-card"><div class="stat-top"><span>Cancellation rate</span><span class="stat-icon orange"><i class="fa-solid fa-ban"></i></span></div><strong id="reportCancelRate">0%</strong><small class="muted">Of all bookings</small></article></div>
+          <div class="panel"><div class="panel-heading"><div><h2>Booking status breakdown</h2><p class="muted">Distribution across all reservation records</p></div></div><div id="reportBars" class="report-bars"></div></div>
+          <div class="panel report-note"><i class="fa-solid fa-circle-info"></i><p>Revenue is estimated using a demo value of ₹500 per guest for confirmed and seated bookings. This is sample reporting data, not payment information.</p></div>
+        </section>
+      </div>
+    </main>
+  </div>
+
+  <div class="modal-backdrop" id="modalBackdrop">
+    <div class="modal" role="dialog" aria-modal="true" aria-labelledby="modalTitle"><div class="modal-head"><div><p class="eyebrow">TABLEBOOK FORM</p><h2 id="modalTitle">Create booking</h2></div><button class="icon-btn" id="closeModal" aria-label="Close"><i class="fa-solid fa-xmark"></i></button></div><form id="modalForm"><div id="modalFields" class="form-grid"></div><div class="modal-actions"><button type="button" class="btn btn-ghost" id="cancelModal">Cancel</button><button type="submit" class="btn btn-primary" id="saveModal">Save booking</button></div></form></div>
+  </div>
+  <div class="toast" id="toast" role="status"></div>
+  <script src="script.js"></script>
+</body>
+</html>
